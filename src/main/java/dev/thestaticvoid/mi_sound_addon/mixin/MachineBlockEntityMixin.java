@@ -1,7 +1,7 @@
 package dev.thestaticvoid.mi_sound_addon.mixin;
 
-import aztech.modern_industrialization.api.FastBlockEntity;
-import aztech.modern_industrialization.api.WrenchableBlockEntity;
+import aztech.modern_industrialization.blocks.FastBlockEntity;
+import aztech.modern_industrialization.blocks.WrenchableBlockEntity;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.IComponent;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
@@ -10,8 +10,6 @@ import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
 import dev.thestaticvoid.mi_sound_addon.item.MalletItem;
 import dev.thestaticvoid.mi_sound_addon.util.SilencedComponent;
 import dev.thestaticvoid.mi_sound_addon.util.SilencedComponentInterface;
-import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -30,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MachineBlockEntity.class)
 public abstract class MachineBlockEntityMixin extends FastBlockEntity
-        implements ExtendedScreenHandlerFactory, RenderAttachmentBlockEntity, WrenchableBlockEntity, SilencedComponentInterface {
+        implements WrenchableBlockEntity, SilencedComponentInterface {
     public MachineBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -47,7 +45,7 @@ public abstract class MachineBlockEntityMixin extends FastBlockEntity
         registerComponents(silencedComp);
     }
 
-    @Inject(method = "onUse", at = @At("RETURN"), remap = false, cancellable = true)
+    @Inject(method = "useItemOn", at = @At("RETURN"), remap = false, cancellable = true)
     private void onUseMixin(Player player, InteractionHand hand, Direction face, CallbackInfoReturnable<InteractionResult> cir) {
         InteractionResult result = MalletItem.onUse((MachineBlockEntity)(Object)this, player, hand);
         if (result.consumesAction()) {

@@ -1,26 +1,45 @@
 package dev.thestaticvoid.mi_sound_addon.item;
 
 import dev.thestaticvoid.mi_sound_addon.MISoundAddon;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class ModItems {
-    public static CreativeModeTab SOUND_ADDON_GROUP = FabricItemGroupBuilder.build(
-            new ResourceLocation(MISoundAddon.MOD_ID, "creative_tab"), () -> new ItemStack(ModItems.MALLET));
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MISoundAddon.MOD_ID);
+    public static DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MISoundAddon.MOD_ID);
+    public static final String CREATIVE_MODE_TAB_TITLE = "message.mi_sound_addon.creative_tab";
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_MODE_TAB = CREATIVE_MODE_TABS.register("misoundaddon_tab", () -> {
+        CreativeModeTab.Builder builder = CreativeModeTab.builder();
+        builder.displayItems((itemDisplay, output) -> {
+            Set<Item> addedItems = new HashSet<>();
 
-    public static final Item MALLET = registerItem("mallet",
-            new MalletItem(new FabricItemSettings().group(SOUND_ADDON_GROUP)));
+            ModItems.ITEMS.getEntries()
+                    .stream()
+                    .map((item) -> item.get().asItem())
+                    .filter(addedItems::add)
+                    .forEach(output::accept);
 
-    private static Item registerItem(String name, Item item) {
-        return Registry.register(Registry.ITEM, new ResourceLocation(MISoundAddon.MOD_ID, name), item);
-    }
+        });
+        builder.icon(() -> new ItemStack(ModItems.MALLET_ITEM.get()));
+        builder.title(Component.translatable(CREATIVE_MODE_TAB_TITLE));
 
-    public static void registerModItems() {
-        MISoundAddon.LOGGER.debug("Registering Mod Items for: " + MISoundAddon.MOD_ID);
+        return builder.build();
+    });
+    public static final DeferredItem<Item> MALLET_ITEM = ITEMS.register("mallet", () -> new Item(new Item.Properties()));
+
+    public static void init(IEventBus bus) {
+        ITEMS.register(bus);
+        CREATIVE_MODE_TABS.register(bus);
     }
 }

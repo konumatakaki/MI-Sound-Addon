@@ -2,18 +2,20 @@ package dev.thestaticvoid.mi_sound_addon.sound;
 
 import net.minecraft.sounds.SoundEvent;
 
+import java.util.function.Supplier;
+
 public class ModSoundEventInfo {
-    private SoundEvent soundEvent;
+    private Supplier<SoundEvent> soundEvent;
     private int soundDuration;
     private float volume;
 
-    public ModSoundEventInfo(SoundEvent soundEvent, int soundDuration, float volume) {
+    public ModSoundEventInfo(Supplier<SoundEvent> soundEvent, int soundDuration, float volume) {
         this.soundEvent = soundEvent;
         this.soundDuration = soundDuration;
         this.volume = volume;
     }
 
-    public SoundEvent getSoundEvent() {
+    public Supplier<SoundEvent> getSoundEvent() {
         return this.soundEvent;
     }
 
@@ -30,6 +32,6 @@ public class ModSoundEventInfo {
     }
 
     public void setVolume(float volume) {
-        this.volume =  volume;
+        this.volume = volume;
     }
 }

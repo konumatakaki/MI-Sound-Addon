@@ -30,7 +30,7 @@ public abstract class TickRecipeMixin implements IComponent.ServerOnly {
 
     @Inject(method = "tickRecipe", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
     private void tickRecipeInjection(CallbackInfoReturnable<Boolean> cir, boolean isActive) {
-        if (MISoundAddonConfig.getConfig().enableSounds) {
+        if (MISoundAddonConfig.machineSoundsEnabled) {
             MachineBlockEntity blockEntity = this.conditionContext.getBlockEntity();
             SilencedComponent silencedState = ((SilencedComponentInterface)blockEntity).mISoundAddon$getSilencedState();
             if (silencedState.silenced) return;
