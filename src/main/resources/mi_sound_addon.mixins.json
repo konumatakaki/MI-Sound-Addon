@@ -6,7 +6,9 @@
   "mixins": [
     "PipeBlockMixin",
     "MachineBlockEntityMixin",
-    "TickRecipeMixin"
+    "TickRecipeMixin",
+    "ReplicatorMachineBlockEntityMixin",
+    "NuclearReactorMultiblockBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

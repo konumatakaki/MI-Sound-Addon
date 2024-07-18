@@ -29,7 +29,7 @@ public abstract class ReplicatorMachineBlockEntityMixin extends MachineBlockEnti
 
     @Inject(method = "tick()V", at = @At(value = "INVOKE",
             target = "Laztech/modern_industrialization/machines/components/IsActiveComponent;updateActive(ZLaztech/modern_industrialization/machines/MachineBlockEntity;)V",
-            ordinal = 0, shift = At.Shift.BEFORE), remap = false)
+            ordinal = 1, shift = At.Shift.BEFORE), remap = false)
     private void tickMixin(CallbackInfo ci) {
         if (MISoundAddonConfig.machineSoundsEnabled) {
             MachineBlockEntity blockEntity = ((ReplicatorMachineBlockEntity)(Object)this);
