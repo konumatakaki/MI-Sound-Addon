@@ -43,7 +43,6 @@ public class ModSounds {
         addSoundEvent("wrench");
         addSoundEvent("replicator");
         updateDurations();
-        updateVolumes();
     }
 
     public static void addSoundEvent(String type) {
@@ -150,7 +149,7 @@ public class ModSounds {
         setDuration("replicator", 20);
     }
 
-    private static void updateVolumes() {
+    public static void updateVolumes() {
         setVolume("assembler", (float) MISoundAddonConfig.assemblerVolume);
         setVolume("blast_furnace", (float)MISoundAddonConfig.blastFurnaceVolume);
         setVolume("centrifuge", (float)MISoundAddonConfig.centrifugeVolume);
