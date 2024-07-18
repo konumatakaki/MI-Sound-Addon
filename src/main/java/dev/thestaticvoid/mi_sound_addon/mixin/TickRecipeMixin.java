@@ -9,6 +9,7 @@ import dev.thestaticvoid.mi_sound_addon.MISoundAddonConfig;
 import dev.thestaticvoid.mi_sound_addon.sound.ModSounds;
 import dev.thestaticvoid.mi_sound_addon.util.SilencedComponent;
 import dev.thestaticvoid.mi_sound_addon.util.SilencedComponentInterface;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +27,7 @@ public abstract class TickRecipeMixin implements IComponent.ServerOnly {
     public long lastSoundTime = 0;
 
     @Shadow(remap = false) @Final private MachineProcessCondition.Context conditionContext;
-    @Shadow(remap = false) private MachineRecipe activeRecipe;
+    @Shadow(remap = false) private RecipeHolder<MachineRecipe> activeRecipe;
 
     @Inject(method = "tickRecipe", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
     private void tickRecipeInjection(CallbackInfoReturnable<Boolean> cir, boolean isActive) {
@@ -37,9 +38,9 @@ public abstract class TickRecipeMixin implements IComponent.ServerOnly {
             long currentGameTime = Objects.requireNonNull(blockEntity.getLevel()).getGameTime();
 
             if (isActive && this.activeRecipe != null) {
-                if (currentGameTime > lastSoundTime + ModSounds.getDuration(this.activeRecipe)) {
+                if (currentGameTime > lastSoundTime + ModSounds.getDuration((MachineRecipe) this.activeRecipe.value())) {
                     lastSoundTime = currentGameTime;
-                    ModSounds.playSound(blockEntity, this.activeRecipe);
+                    ModSounds.playSound(blockEntity, (MachineRecipe) this.activeRecipe.value());
                 }
             }
         }

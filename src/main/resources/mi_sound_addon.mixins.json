@@ -4,7 +4,9 @@
   "package": "dev.thestaticvoid.mi_sound_addon.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "PipeBlockMixin"
+    "PipeBlockMixin",
+    "MachineBlockEntityMixin",
+    "TickRecipeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
