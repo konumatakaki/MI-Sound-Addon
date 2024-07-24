@@ -36,7 +36,7 @@ public class ModItems {
 
         return builder.build();
     });
-    public static final DeferredItem<Item> MALLET_ITEM = ITEMS.register("mallet", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> MALLET_ITEM = ITEMS.register("mallet", () -> new MalletItem(new Item.Properties()));
 
     public static void init(IEventBus bus) {
         ITEMS.register(bus);

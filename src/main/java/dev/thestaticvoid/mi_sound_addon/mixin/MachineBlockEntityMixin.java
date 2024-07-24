@@ -7,10 +7,16 @@ import aztech.modern_industrialization.machines.IComponent;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.components.OrientationComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
+import dev.thestaticvoid.mi_sound_addon.item.MalletItem;
 import dev.thestaticvoid.mi_sound_addon.util.SilencedComponent;
 import dev.thestaticvoid.mi_sound_addon.util.SilencedComponentInterface;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +25,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MachineBlockEntity.class)
 public abstract class MachineBlockEntityMixin extends FastBlockEntity
@@ -39,19 +46,19 @@ public abstract class MachineBlockEntityMixin extends FastBlockEntity
         registerComponents(silencedComp);
     }
 
-//    @Inject(method = "useItemOn", at = @At("RETURN"), remap = false, cancellable = true)
-//    private void onUseMixin(Player player, InteractionHand hand, Direction face, CallbackInfoReturnable<InteractionResult> cir) {
-//        InteractionResult result = MalletItem.onUse((MachineBlockEntity)(Object)this, player, hand);
-//        if (result.consumesAction()) {
-//            mISoundAddon$toggleSilencedState();
-//            if (silencedComp.silenced) {
-//                player.displayClientMessage(Component.translatable(MalletItem.MACHINE_SILENCED), true);
-//            } else {
-//                player.displayClientMessage(Component.translatable(MalletItem.MACHINE_UNSILENCED), true);
-//            }
-//        }
-//        cir.setReturnValue(result);
-//    }
+    @Inject(method = "useItemOn", at = @At("RETURN"), remap = false, cancellable = true)
+    private void onUseMixin(Player player, InteractionHand hand, Direction face, CallbackInfoReturnable<ItemInteractionResult> cir) {
+        ItemInteractionResult result = MalletItem.onUse((MachineBlockEntity)(Object)this, player, hand);
+        if (result.consumesAction()) {
+            mISoundAddon$toggleSilencedState();
+            if (silencedComp.silenced) {
+                player.displayClientMessage(Component.translatable(MalletItem.MACHINE_SILENCED), true);
+            } else {
+                player.displayClientMessage(Component.translatable(MalletItem.MACHINE_UNSILENCED), true);
+            }
+        }
+        cir.setReturnValue(result);
+    }
 
     @Override
     public void mISoundAddon$toggleSilencedState() {
