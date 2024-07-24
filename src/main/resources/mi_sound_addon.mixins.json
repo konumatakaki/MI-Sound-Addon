@@ -3,12 +3,15 @@
   "minVersion": "0.8",
   "package": "dev.thestaticvoid.mi_sound_addon.mixin",
   "compatibilityLevel": "JAVA_8",
+  "refmap": "mi_sound_addon.refmap.json",
   "mixins": [
-    "PipeBlockMixin",
     "MachineBlockEntityMixin",
-    "TickRecipeMixin",
+    "NuclearReactorMultiblockBlockEntityMixin",
+    "PipeBlockMixin",
     "ReplicatorMachineBlockEntityMixin",
-    "NuclearReactorMultiblockBlockEntityMixin"
+    "TickRecipeMixin"
+  ],
+  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
