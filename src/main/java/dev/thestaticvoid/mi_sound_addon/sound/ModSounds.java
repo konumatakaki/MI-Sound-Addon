@@ -28,6 +28,9 @@ public class ModSounds {
     public static void init(IEventBus bus) {
         MISoundAddon.LOGGER.debug("Registering sounds for " + MISoundAddon.MOD_ID);
         populateDefaultRecipeTypes(MIMachineRecipeTypes.getRecipeTypes());
+        for (MachineRecipeType mrt : MIMachineRecipeTypes.getRecipeTypes()) {
+            MISoundAddon.LOGGER.debug(mrt.getPath());
+        }
         SOUND_EVENTS_REGISTRY.register(bus);
     }
 
