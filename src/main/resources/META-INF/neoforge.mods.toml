@@ -1,14 +1,16 @@
 modLoader = "javafml"
 loaderVersion = "${loader_version_range}"
 license = "${mod_license}"
+issueTrackerURL = "${mod_github_link}/issues"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${mod_version}"
 displayName = "${mod_name}"
-displayURL = "https://github.com/TheStaticVoid/MI-Sound-Addon"
+displayURL = "${mod_github_link}"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
+logoFile = 'mod_icon.png'
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
@@ -23,13 +25,13 @@ side = "BOTH"
 [[dependencies."${mod_id}"]]
 modId = "modern_industrialization"
 type = "required"
-versionRange = "[2.2.14-beta,)"
+versionRange = "${mi_version_range}"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "kubejs"
 type = "optional"
-versionRange = "[2100.7.0-build.102,)"
+versionRange = "${kubejs_version_range}"
 ordering = "AFTER"
 side = "BOTH"
