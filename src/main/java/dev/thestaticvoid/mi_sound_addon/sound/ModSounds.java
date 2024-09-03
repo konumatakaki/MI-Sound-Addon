@@ -97,7 +97,7 @@ public class ModSounds {
 
         ModSoundEventInfo soundEventInfo;
 
-        if (!blockEntity.guiParams.blockId.equals("electric_blast_furnace")) {
+        if (!blockEntity.guiParams.blockId.getPath().equals("electric_blast_furnace")) {
             soundEventInfo = SOUND_EVENTS.get(getRecipeType(activeRecipe));
         } else {
             soundEventInfo = SOUND_EVENTS.get("electric_blast_furnace");
