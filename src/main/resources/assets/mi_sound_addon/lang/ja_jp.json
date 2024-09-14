@@ -1,0 +1,8 @@
+{
+  "item.mi_sound_addon.mallet": "鋼鉄のマレット",
+
+  "message.mi_sound_addon.creative_tab": "MI Sound Addon",
+  "message.mi_sound_addon.tooltip": "機械を右クリックすると、消音または消音解除できる。",
+  "message.mi_sound_addon.machine_silenced": "消音",
+  "message.mi_sound_addon.machine_unsilenced": "消音解除"
+}
